@@ -10,10 +10,7 @@ import { useTranslation } from "react-i18next";
 import { v4 as uuidv4 } from "uuid";
 import { PadBox } from "../../PadBox";
 import { SvgsDrop } from "../../Svgs";
-import {
-  isFileSizeValid,
-  isFileTypeValid,
-} from "./../../../../../apps/web/utils/file";
+import { isFileSizeValid, isFileTypeValid } from "../../utils";
 import { FileInput, FileUploadContainer } from "./FileUpload.styled";
 import { Skeleton } from "./Skeleton";
 import { UploadedFileName } from "./UploadedFileName";
