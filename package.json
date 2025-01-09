@@ -1,10 +1,11 @@
 {
   "name": "sixtify-brahma",
   "version": "0.1.1",
-  "scripts": { 
+  "scripts": {
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx}\"",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "build": "turbo build"
   },
   "main": "index.ts",
   "devDependencies": {
@@ -52,6 +53,7 @@
     "eslint-plugin-sonarjs": "1.0.4-alpha.1",
     "file-saver": "^2.0.5",
     "file64": "1.0.1",
+    "gh-pages": "^6.3.0",
     "i18next": "^23.12.1",
     "jszip": "^3.10.1",
     "lodash": "^4.17.21",
