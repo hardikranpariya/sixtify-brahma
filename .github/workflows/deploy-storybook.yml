@@ -1,0 +1,40 @@
+name: Deploy Storybook to GitHub Pages
+
+# Trigger the workflow on every push to the main branch
+on:
+  push:
+    branches:
+      - main  # Adjust this to match your branch name
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out the repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Node.js (adjust the Node version if needed)
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20  # Use the Node.js version your project requires
+
+      - name: Install PNPM Globally
+        run: npm install -g pnpm
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: pnpm install  # Use `npm install` or `yarn install` if not using pnpm
+
+      # Step 4: Build the Storybook static files
+      - name: Build Storybook
+        run: pnpm run build  # Adjust the path to your Storybook app
+
+      # Step 5: Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: apps/docs/storybook-static  # Adjust to your static output directory
