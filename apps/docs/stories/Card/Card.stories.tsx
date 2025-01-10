@@ -12,7 +12,7 @@ const meta: Meta<typeof Card> = {
     children: { control: false },
   },
   args: {
-    heading: "Card Headin1g",
+    heading: "Card Heading",
   },
   render: (args) => (
     <Card {...args}>
