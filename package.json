@@ -1,5 +1,5 @@
 {
-  "name": "sixtify-brahma",
+  "name": "@codezee/sixtify-brahma",
   "version": "0.1.1",
   "scripts": {
     "lint": "turbo lint",
