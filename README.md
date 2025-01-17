@@ -58,8 +58,9 @@ Learn more about the power of Turborepo:
 
 Install the package using pnpm:
 
-bash
+```sh
 pnpm install @codezee/sixtify-brahama
+```
 
 ## Usage
 
