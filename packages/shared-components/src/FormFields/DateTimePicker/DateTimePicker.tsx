@@ -12,10 +12,9 @@ import type {
   UseControllerProps,
 } from "react-hook-form";
 import { useController } from "react-hook-form";
-import { Skeleton } from "./Skeleton";
 import { CalendarAction } from "../../Actions";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import { LeftArrowIcon, RightArrowIcon } from "../DatePicker";
+import { Skeleton } from "./Skeleton";
 
 export type DateTimePickerProps<P extends FieldValues> = UseControllerProps<P> &
   MuiDateTimePickerProps<PickerValidDate> &
@@ -36,38 +35,6 @@ export type DateTimePickerProps<P extends FieldValues> = UseControllerProps<P> &
       error: FieldError | { type: string; message?: string }
     ) => void;
   }>;
-
-export const LeftArrowIcon: React.FC = () => {
-  const theme = useTheme();
-
-  const { iron } = theme.palette.app.color;
-
-  return (
-    <ChevronLeftIcon
-      sx={{
-        border: `1px solid ${iron[800]}`,
-        borderRadius: "5px",
-        p: "4px",
-      }}
-    />
-  );
-};
-
-export const RightArrowIcon: React.FC = () => {
-  const theme = useTheme();
-
-  const { iron } = theme.palette.app.color;
-
-  return (
-    <ChevronRightIcon
-      sx={{
-        border: `1px solid ${iron[800]}`,
-        borderRadius: "5px",
-        p: "4px",
-      }}
-    />
-  );
-};
 
 export function DateTimePicker<P extends FieldValues>({
   control,
