@@ -2,7 +2,7 @@
 
 import { Box } from "@mui/material";
 import List from "@mui/material/List";
-import type { ReactNode, HTMLAttributeAnchorTarget } from "react";
+import type { HTMLAttributeAnchorTarget, ReactNode } from "react";
 import { PadBox } from "../PadBox";
 import { AppLogoMedium } from "../Svgs/AppLogo/AppLogoMedium";
 import { AppLogoSmall } from "../Svgs/AppLogo/AppLogoSmall";

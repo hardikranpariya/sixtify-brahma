@@ -1,13 +1,18 @@
 {
   "name": "@codezee/sixtify-brahma",
-  "version": "0.2.1",
+  "version": "0.2.12",
   "scripts": {
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx}\"",
     "prepare": "husky install",
     "build": "turbo build"
   },
-  "main": "index.ts",
+  "main": "packages/shared-components/dist/index.js",
+  "types": "packages/shared-components/dist/index.d.ts",
+  "files": [
+    "packages/shared-components/dist",
+    "apps/docs/storybook-static"
+  ],
   "devDependencies": {
     "@commitlint/cli": "^19.3.0",
     "@commitlint/config-conventional": "^19.2.2",

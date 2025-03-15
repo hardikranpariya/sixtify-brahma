@@ -22,15 +22,11 @@ export const MenuStyled = styled(Menu)(({ theme }) => {
 
 export const IconButtonStyled = styled(IconButton, {
   shouldForwardProp: (prop) => prop !== "isOpened",
-})<{ isOpened?: boolean }>(({ theme, isOpened }) => {
-  const { color } = theme.palette.app;
-
+})<{ isOpened?: boolean }>(() => {
   const style: CSSObject = {
-    paddingInline: "0.2rem 0.8rem",
+    paddingInline: "0.3rem",
     paddingBlock: "0.2rem",
-    borderRadius: "20px",
-    background: isOpened ? color.butterflyBlue[500] : color.slate[800],
-    border: `1px solid ${isOpened ? color.butterflyBlue[900] : color.iron[700]}`,
+    borderRadius: "8px",
   };
 
   return style;

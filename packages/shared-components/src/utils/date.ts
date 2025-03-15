@@ -1,11 +1,25 @@
-import { DateTime } from "luxon";
+import { DateTime, Duration } from "luxon";
 
-export const dateFormat = (date: Date) => {
-  return DateTime.fromJSDate(date).toFormat("dd-MM-yyyy");
+export const formatDate = (date: string, format: string = "dd-MM-yyyy") => {
+  return DateTime.fromISO(date).toFormat(format);
 };
 
 export const getTimeInHHmm = (date: string, format: string = "HH:mm") => {
-  const dateTime = DateTime.fromISO(date).toFormat(format);
+  const dateTime = DateTime.fromISO(date);
 
-  return dateTime;
+  if (!dateTime.isValid) {
+    return "";
+  }
+
+  return dateTime.toFormat(format);
+};
+
+export const getDifferenceInHHmmss = (startTime: string, endTime: string) => {
+  const start = DateTime.fromISO(startTime);
+
+  const end = DateTime.fromISO(endTime);
+
+  const diff = end.diff(start, ["hours", "minutes", "seconds"]);
+
+  return Duration.fromObject(diff.toObject()).toFormat("hh:mm:ss");
 };

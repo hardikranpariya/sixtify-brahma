@@ -3,9 +3,9 @@ import {
   ListItemText,
   Stack,
   useTheme,
+  type ListItemButtonProps,
   type SxProps,
   type Theme,
-  type ListItemButtonProps,
 } from "@mui/material";
 import type { HTMLAttributeAnchorTarget, ReactNode } from "react";
 import { Bullet } from "./Bullet";
@@ -61,7 +61,13 @@ export const MenuItem = ({
         justifyContent="center"
       >
         {icon}
-        {title && <ListItemText primary={title} />}
+        {title && (
+          <ListItemText
+            primary={title}
+            disableTypography={true}
+            sx={{ ...sx, padding: "0" }}
+          />
+        )}
       </Stack>
       {endAdornment}
     </ListItemButton>

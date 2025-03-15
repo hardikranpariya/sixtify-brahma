@@ -1,6 +1,6 @@
 import type { TooltipProps as MuiTooltipProps } from "@mui/material";
 import { Box, Tooltip as MuiTooltip, Typography } from "@mui/material";
-import { ReactNode, type PropsWithChildren } from "react";
+import type { PropsWithChildren, ReactNode } from "react";
 
 type TooltipProps = PropsWithChildren<{
   toolTipLabel: ReactNode;

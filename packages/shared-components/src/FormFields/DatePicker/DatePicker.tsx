@@ -19,7 +19,7 @@ import { Skeleton } from "./Skeleton";
 export type DatePickerProps<P extends FieldValues> = UseControllerProps<P> &
   MuiDatePickerProps<PickerValidDate> &
   Partial<{
-    label: string;
+    label?: string;
     required: boolean;
     disabled: boolean;
     format: string;
@@ -27,6 +27,7 @@ export type DatePickerProps<P extends FieldValues> = UseControllerProps<P> &
     helperText: string;
     loading: boolean;
     clearable?: boolean;
+    disableKeyboardInput?: boolean;
     setError: (
       name: keyof P,
       error: FieldError | { type: string; message?: string }
@@ -84,6 +85,7 @@ export function DatePicker<P extends FieldValues>({
   required = false,
   clearable = true,
   rules,
+  disableKeyboardInput = false,
   format = dateFormats.dateWithEuropean,
   ...restProps
 }: DatePickerProps<P>) {
@@ -100,14 +102,14 @@ export function DatePicker<P extends FieldValues>({
   const finalValue = value ? DateTime.fromISO(value) : null;
 
   if (loading) {
-    return <Skeleton />;
+    return <Skeleton label={label} />;
   }
 
   const EmptyIcon = () => null;
 
   return (
     <Stack gap="10px">
-      <InputLabel required={required}>{label}</InputLabel>
+      {label && <InputLabel required={required}>{label}</InputLabel>}
 
       <MuiDatePicker<DateTime>
         {...restField}
@@ -123,6 +125,10 @@ export function DatePicker<P extends FieldValues>({
           field: {
             clearable,
             onClear: () => onChange(null),
+            readOnly: disableKeyboardInput,
+          },
+          clearButton: {
+            tabIndex: -1, // This will make the clear button skipped in the tab order
           },
           textField: {
             disabled,
@@ -140,6 +146,11 @@ export function DatePicker<P extends FieldValues>({
                   width: "30px",
                 },
               },
+            },
+            onKeyDown: (event) => {
+              if (!clearable && event.key === "Backspace") {
+                event.preventDefault();
+              }
             },
           },
           day: {

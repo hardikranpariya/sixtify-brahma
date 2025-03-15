@@ -16,18 +16,21 @@ import {
   useTheme,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { useMemo, useRef, type KeyboardEvent } from "react";
+import { useMemo, useRef, useState, type KeyboardEvent } from "react";
 import {
+  useController,
   type ControllerRenderProps,
   type FieldValues,
   type UseControllerProps,
-  useController,
 } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { EditAction } from "../../Actions";
-import { Skeleton } from "./Skeleton";
+import { toasts } from "../../Toast";
 import { BoxStyled, CheckStyled } from "../CheckBox/CheckBox.styled";
+import { Skeleton } from "./Skeleton";
 
 export type Option = {
+  heading?: string;
   label: string;
   value: string | number;
   disabled?: boolean;
@@ -41,6 +44,7 @@ export type AutocompleteProps<P extends FieldValues> = UseControllerProps<P> &
     Omit<
       MuiAutocompleteProps<
         {
+          heading?: string;
           label: string;
           value: string | number;
           disabled?: boolean;
@@ -60,11 +64,14 @@ export type AutocompleteProps<P extends FieldValues> = UseControllerProps<P> &
     label?: string;
     helperText?: string;
     error?: boolean;
+    withLabel?: boolean;
     placeholder?: string;
     isShowAvatar?: boolean;
     shouldCloseOnSelect?: boolean;
     onAction?: () => void;
     isShowSelectAll?: boolean;
+    isShowOptionsOnType?: boolean;
+    maxLimit?: number;
     renderOption?: (
       props: React.HTMLProps<HTMLLIElement>,
       option: Option,
@@ -86,19 +93,26 @@ export function Autocomplete<P extends FieldValues>({
   loading = false,
   helperText,
   error,
+  withLabel = false,
   placeholder = "",
   freeSolo,
+  isShowOptionsOnType = false,
   isShowSelectAll = true,
   isShowAvatar = false,
   shouldCloseOnSelect = false,
   onAction,
   renderOption,
   getOptionLabel,
+  maxLimit,
   ...restProps
 }: AutocompleteProps<P>) {
   const {
     field: { onChange, value, ...restField },
   } = useController({ name, control, defaultValue, rules });
+
+  const { t } = useTranslation();
+
+  const [inputValue, setInputValue] = useState("");
 
   const handleSelectAll = (isSelected: boolean) => {
     if (isSelected) {
@@ -130,6 +144,16 @@ export function Autocomplete<P extends FieldValues>({
     ];
   }, [multiple, isShowSelectAll, options]);
 
+  const filteredOptions = useMemo(() => {
+    if (inputValue.length < 3) {
+      return [];
+    }
+
+    return options.filter((option) =>
+      option.label.toLowerCase().includes(inputValue.toLowerCase())
+    );
+  }, [inputValue]);
+
   // eslint-disable-next-line sonarjs/function-return-type
   const selectedValue = useMemo(() => {
     if (multiple && freeSolo) {
@@ -140,6 +164,8 @@ export function Autocomplete<P extends FieldValues>({
           return selectedOption ? selectedOption.label : val.toString();
         }) || []
       );
+    } else if (withLabel) {
+      return options.find((option) => option.value === value?.value) ?? null;
     } else if (multiple) {
       return options.filter((option) => value?.includes(option.value));
     } else if (!options.find((option) => option.value === value) && freeSolo) {
@@ -176,6 +202,19 @@ export function Autocomplete<P extends FieldValues>({
     },
   }));
 
+  const GroupHeader = styled("div")(({ theme }) => ({
+    position: "sticky",
+    padding: "4px 10px",
+    fontSize: "16px",
+    fontWeight: 500,
+    color: theme.palette.app.color.butterflyBlue[900],
+    backgroundColor: theme.palette.app.color.butterflyBlue[500],
+  }));
+
+  const GroupItems = styled("ul")({
+    padding: 0,
+  });
+
   if (loading) {
     return <Skeleton label={label} />;
   }
@@ -193,6 +232,14 @@ export function Autocomplete<P extends FieldValues>({
         }
 
         if (selectedValue && Array.isArray(selectedValue)) {
+          if (maxLimit && selectedValue.length >= maxLimit) {
+            toasts.error({
+              title: t("common.autocomplete.limitExceed", { maxLimit }),
+            });
+
+            return;
+          }
+
           const valuesArray = selectedValue.map((item) => item.value);
 
           if (valuesArray.includes(highlightedOptionRef.current)) {
@@ -339,15 +386,25 @@ export function Autocomplete<P extends FieldValues>({
                   ...params.InputProps,
                   startAdornment,
                 }}
+                onChange={(e) => {
+                  if (isShowOptionsOnType) {
+                    setInputValue(e.target.value);
+                  }
+                }}
                 onKeyDown={(e) => handleKeyDown(e)}
               />
             );
           }}
           multiple={multiple}
-          options={memoizedOptions}
+          options={isShowOptionsOnType ? filteredOptions : memoizedOptions}
           isOptionEqualToValue={(option, value) =>
             freeSolo ? false : option.value === value.value
           }
+          onInputChange={(_, __, reason) => {
+            if (reason === "clear") {
+              setInputValue("");
+            }
+          }}
           getOptionLabel={(option) => {
             if (getOptionLabel) {
               return getOptionLabel(option);
@@ -360,7 +417,25 @@ export function Autocomplete<P extends FieldValues>({
             return option.label;
           }}
           value={selectedValue}
+          // eslint-disable-next-line sonarjs/cognitive-complexity
           onChange={(_, newValue) => {
+            if (withLabel) {
+              return onChange(newValue);
+            }
+
+            if (
+              multiple &&
+              Array.isArray(newValue) &&
+              maxLimit &&
+              newValue.length > maxLimit
+            ) {
+              toasts.error({
+                title: t("common.autocomplete.limitExceed", { maxLimit }),
+              });
+
+              return;
+            }
+
             if (multiple && isShowSelectAll && Array.isArray(newValue)) {
               const isSelectAllIncluded = newValue.some(
                 (option) =>
@@ -406,6 +481,13 @@ export function Autocomplete<P extends FieldValues>({
 
             onChange(newValue ? newValue.value : null);
           }}
+          groupBy={(option) => option.heading ?? ""}
+          renderGroup={(params) => (
+            <li key={params.key}>
+              <GroupHeader>{params.group}</GroupHeader>
+              <GroupItems>{params.children}</GroupItems>
+            </li>
+          )}
           getOptionDisabled={(option) => !!option.disabled}
         />
 

@@ -1,9 +1,11 @@
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { Box, InputLabel, Stack, Tooltip, useTheme } from "@mui/material";
 import type { DateTimePickerProps as MuiDateTimePickerProps } from "@mui/x-date-pickers/DateTimePicker";
 import { DateTimePicker as MuiDateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import type { PickerValidDate } from "@mui/x-date-pickers/models";
 import { DateTime } from "luxon";
-import { type ReactElement, useState } from "react";
+import React, { type ReactElement, useState } from "react";
 import type {
   FieldError,
   FieldValues,
@@ -13,7 +15,6 @@ import type {
 } from "react-hook-form";
 import { useController } from "react-hook-form";
 import { CalendarAction } from "../../Actions";
-import { LeftArrowIcon, RightArrowIcon } from "../DatePicker";
 import { Skeleton } from "./Skeleton";
 
 export type DateTimePickerProps<P extends FieldValues> = UseControllerProps<P> &
@@ -29,12 +30,44 @@ export type DateTimePickerProps<P extends FieldValues> = UseControllerProps<P> &
     clearable?: boolean;
     helperIcon?: ReactElement;
     toolTipText?: string;
-
+    timeStepsMinutes?: number;
     setError: (
       name: keyof P,
       error: FieldError | { type: string; message?: string }
     ) => void;
   }>;
+
+const LeftArrowIcon: React.FC = () => {
+  const theme = useTheme();
+
+  const { iron } = theme.palette.app.color;
+
+  return (
+    <ChevronLeftIcon
+      sx={{
+        border: `1px solid ${iron[800]}`,
+        borderRadius: "5px",
+        p: "4px",
+      }}
+    />
+  );
+};
+
+const RightArrowIcon: React.FC = () => {
+  const theme = useTheme();
+
+  const { iron } = theme.palette.app.color;
+
+  return (
+    <ChevronRightIcon
+      sx={{
+        border: `1px solid ${iron[800]}`,
+        borderRadius: "5px",
+        p: "4px",
+      }}
+    />
+  );
+};
 
 export function DateTimePicker<P extends FieldValues>({
   control,
@@ -52,6 +85,7 @@ export function DateTimePicker<P extends FieldValues>({
   format = "dd-MM-yyyy HH:mm",
   helperIcon,
   toolTipText,
+  timeStepsMinutes = 1,
   ...restProps
 }: DateTimePickerProps<P>) {
   const {
@@ -105,6 +139,7 @@ export function DateTimePicker<P extends FieldValues>({
         open={open}
         ampm={false}
         value={pickerValue}
+        timeSteps={{ minutes: timeStepsMinutes }}
         format={format}
         onOpen={() => setOpen(true)}
         onClose={() => setOpen(false)}
@@ -128,6 +163,9 @@ export function DateTimePicker<P extends FieldValues>({
           },
           popper: {
             sx: {
+              "& .MuiMultiSectionDigitalClockSection-root::after": {
+                display: "unset",
+              },
               "& .MuiList-padding": {
                 padding: "10px",
               },

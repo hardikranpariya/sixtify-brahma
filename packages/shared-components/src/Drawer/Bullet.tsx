@@ -4,7 +4,7 @@ export const Bullet = () => {
     <CircleIcon
       className="bullet-hover"
       sx={{
-        fontSize: "7px",
+        fontSize: "6px",
         borderRadius: "50%",
       }}
     />

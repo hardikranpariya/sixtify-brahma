@@ -16,7 +16,8 @@
   "private": true,
   "scripts": {
     "generate:component": "turbo gen react-component",
-    "lint": "eslint . --max-warnings 0"
+    "lint": "eslint . --max-warnings 0",
+    "build":"tsc && turbo build"
   },
   "version": "0.0.0"
 }

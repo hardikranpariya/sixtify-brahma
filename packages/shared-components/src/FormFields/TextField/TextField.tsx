@@ -49,7 +49,7 @@ export function TextField<P extends FieldValues>({
   };
 
   if (loading) {
-    return <Skeleton rows={rows} />;
+    return <Skeleton label={label} rows={rows} />;
   }
 
   return (
@@ -83,7 +83,7 @@ export function TextField<P extends FieldValues>({
             onChange(value);
           }
         }}
-        value={typeof value === "string" ? value.trimStart() : value}
+        value={typeof value === "string" ? value.trimStart() : (value ?? "")}
         {...restField}
         {...inputFieldProps}
       />

@@ -1,10 +1,14 @@
 import { getColorByVariant, type WorkDayType } from "../utils/colorVariant";
 
 type SvgsIndicatorIconProps = {
-  variant: WorkDayType;
+  variant?: WorkDayType;
+  colourCode?: string;
 };
-export const SvgsIndicator = ({ variant }: SvgsIndicatorIconProps) => {
-  const color = getColorByVariant(variant);
+export const SvgsIndicator = ({
+  variant,
+  colourCode,
+}: SvgsIndicatorIconProps) => {
+  const color = variant ? getColorByVariant(variant) : colourCode;
 
   return (
     <svg

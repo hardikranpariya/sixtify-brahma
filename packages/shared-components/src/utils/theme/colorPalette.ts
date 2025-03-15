@@ -41,6 +41,7 @@ export const colorPalette: ColorPalette = {
     800: "hsla(230, 90%, 3%, 0.08)",
     700: "hsla(226, 34%, 15%, 1)",
     600: "hsla(0, 0%, 22%, 0.7)",
+    500: "hsla(0, 0%, 18%, 1)",
   },
   lightSlateBlue: {
     900: "hsla(234, 99%, 68%, 1)",
@@ -99,6 +100,7 @@ export const colorPalette: ColorPalette = {
   red: {
     900: "hsla(0, 90%, 47%, 1)", //error
     800: "hsla(0, 73%, 59%, 1)",
+    700: "hsla(0, 81%, 37%, 1)",
   },
   lightBlue: {
     100: "hsla(193, 4%, 92%)",

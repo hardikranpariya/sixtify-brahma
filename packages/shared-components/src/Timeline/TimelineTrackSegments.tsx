@@ -1,7 +1,8 @@
 import { Box, Stack, Tooltip } from "@mui/material";
+import { DateTime } from "luxon";
 import { getColorByVariant } from "../utils/colorVariant";
-import { getArrowValue, type HighlightedInterval } from "./Timeline";
 import { getTimeInHHmm } from "../utils/date";
+import { getArrowValue, type HighlightedInterval } from "./Timeline";
 
 type TimelineTrackSegmentsProps = {
   totalDots: number;
@@ -20,6 +21,14 @@ export const TimelineTrackSegments = ({
         const inTime = getTimeInHHmm(interval.in_time);
 
         const outTime = getTimeInHHmm(interval.out_time);
+
+        const intervalInTime = DateTime.fromISO(interval.in_time);
+
+        const intervalOutTime = DateTime.fromISO(interval.out_time);
+
+        const shiftHours = intervalOutTime
+          .diff(intervalInTime, ["hours", "minutes"])
+          .toFormat("hh:mm");
 
         let in_time = getArrowValue(inTime);
 
@@ -53,7 +62,7 @@ export const TimelineTrackSegments = ({
 
         const labelText = `In/Out: ${getTimeInHHmm(interval.in_time)} - ${getTimeInHHmm(
           interval.out_time
-        )}`;
+        )} (${shiftHours})`;
 
         const color = getColorByVariant(interval.status_type);
 

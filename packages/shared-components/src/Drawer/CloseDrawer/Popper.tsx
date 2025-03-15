@@ -25,15 +25,15 @@ export const Popper = ({
           name: "offset",
           options: {
             offset: [
-              currentMenuIndex ? 79 : 200,
-              currentMenuIndex ? currentMenuIndex * 36 + 82 : -56,
+              currentMenuIndex ? 79 : 203,
+              currentMenuIndex ? currentMenuIndex * 43.5 + 82 : -40,
             ],
           },
         },
       ]}
       sx={{
         background: mirage[900],
-        width: "200px",
+        width: "203px",
         zIndex: 1300,
       }}
     >

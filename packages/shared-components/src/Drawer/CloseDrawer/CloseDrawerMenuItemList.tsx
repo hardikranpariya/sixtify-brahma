@@ -1,7 +1,8 @@
+import { Box } from "@mui/material";
 import { isEmpty as _isEmpty } from "lodash";
 import {
-  type MouseEvent,
   type HTMLAttributeAnchorTarget,
+  type MouseEvent,
   useMemo,
   useState,
 } from "react";
@@ -9,7 +10,10 @@ import { v4 as uuidv4 } from "uuid";
 import { urlToNestedObject } from "../../utils/urlToNestedObject";
 import type { MenuItem } from "../Drawer";
 import { CloseDrawerMenuItem } from "./CloseDrawerMenuItem";
-import { CloseDrawerSubMenuItemList } from "./CloseDrawerSubMenuItemList";
+import {
+  CloseDrawerSubMenuItemList,
+  type MenuOpenState,
+} from "./CloseDrawerSubMenuItemList";
 import { Popper } from "./Popper";
 
 type CloseDrawerMenuItemListProps = {
@@ -27,9 +31,9 @@ export const CloseDrawerMenuItemList = ({
 
   const [currentMenuIndex, setCurrentMenuIndex] = useState<number>(0);
 
-  const [currentPathMenuOpen, setCurrentPathMenuOpen] = useState<
-    Record<string, unknown>
-  >({});
+  const [currentPathMenuOpen, setCurrentPathMenuOpen] = useState<MenuOpenState>(
+    {}
+  );
 
   useMemo(() => {
     const obj = urlToNestedObject(currentPathname);
@@ -86,7 +90,7 @@ export const CloseDrawerMenuItemList = ({
       })}
 
       {!!anchorEl && (
-        <div onMouseLeave={handleClose}>
+        <Box onMouseLeave={handleClose}>
           <Popper
             open={true}
             anchorEl={anchorEl}
@@ -98,7 +102,7 @@ export const CloseDrawerMenuItemList = ({
               onCloseMenuPopover={handleClose}
             />
           </Popper>
-        </div>
+        </Box>
       )}
     </>
   );

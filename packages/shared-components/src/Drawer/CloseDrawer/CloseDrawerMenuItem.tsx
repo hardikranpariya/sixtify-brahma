@@ -29,21 +29,28 @@ export const CloseDrawerMenuItem = ({
       component="li"
       sx={{
         bgcolor: selected && !isShowEndAdornment ? butterflyBlue[900] : "",
+        padding: !title ? "2.5px 0" : "0px",
+        wordBreak: "break-word",
       }}
     >
       <MenuItem
         sx={{
+          fontSize: "14px",
+          padding: "9.5px 16px",
           ":focus-visible": {
             border: `1px solid ${butterflyBlue[900]}`,
             backgroundColor: slate[900],
           },
+          margin: "0",
         }}
         selected={selected}
         title={title}
         icon={icon}
         onClick={onClick}
         onMouseEnter={onMouseEnter}
-        endAdornment={isShowEndAdornment && <ChevronRight />}
+        endAdornment={
+          isShowEndAdornment && <ChevronRight sx={{ fontSize: "16px" }} />
+        }
       />
     </Box>
   );

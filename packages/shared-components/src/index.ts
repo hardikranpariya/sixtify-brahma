@@ -14,6 +14,7 @@ export * from "./Indicator";
 export * from "./Layouts";
 export * from "./Loader";
 export * from "./PadBox";
+export * from "./Pagination";
 export * from "./Stepper";
 export * from "./Svgs";
 export * from "./Tab";

@@ -1,8 +1,8 @@
-import CallOutlinedIcon from "@mui/icons-material/CallOutlined";
-import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import { Box, Stack } from "@mui/material";
 import type { PropsWithChildren } from "react";
 import { PadBox } from "../../../PadBox";
+import { SvgEmail } from "../../../Svgs/SvgEmail";
+import { SvgPhone } from "../../../Svgs/SvgPhone";
 import { CardItem, CardItemValue } from "../../CardItem";
 
 type ProfileCardBodyProps = PropsWithChildren<{
@@ -39,11 +39,11 @@ export function ProfileCardBody({
             value={<CardItemValue title={subDepartment} loading={loading} />}
           />
           <CardItem
-            label={<EmailOutlinedIcon />}
+            label={<SvgEmail />}
             value={<CardItemValue title={email} loading={loading} />}
           />
           <CardItem
-            label={<CallOutlinedIcon />}
+            label={<SvgPhone />}
             value={<CardItemValue title={phone} loading={loading} />}
           />
         </Stack>

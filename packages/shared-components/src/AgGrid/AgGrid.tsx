@@ -4,7 +4,9 @@ import { AgGridReact } from "ag-grid-react";
 import type { Ref } from "react";
 import { forwardRef } from "react";
 
-export const defaultPageSize = 25;
+export const defaultPageSize = 50;
+
+export const pageSizeOptions = [20, 50, 100, 200];
 
 //TODO: jaydip, fix unknown type
 export type AgGridProps<T = unknown> = AgGridReactProps<T> & {
@@ -38,6 +40,7 @@ export const AgGrid = forwardRef(
       // eslint-disable-next-line quotes
       overlayNoRowsTemplate = '<span class="ag-overlay-no-rows-center">No Data Found</span>',
       infiniteInitialRowCount = defaultPageSize,
+      pagination = false,
       ...rest
     } = props;
 
@@ -77,6 +80,9 @@ export const AgGrid = forwardRef(
           rowBuffer={rowBuffer}
           infiniteInitialRowCount={infiniteInitialRowCount}
           overlayNoRowsTemplate={overlayNoRowsTemplate}
+          pagination={pagination}
+          {...(pagination ? { paginationPageSize: defaultPageSize } : {})}
+          paginationPageSizeSelector={pagination ? pageSizeOptions : false}
           {...rest}
         />
       </div>

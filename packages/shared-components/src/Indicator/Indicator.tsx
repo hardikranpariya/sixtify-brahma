@@ -4,13 +4,14 @@ import { type WorkDayType } from "../utils/colorVariant";
 
 type IndicatorProps = {
   label?: string;
-  variant: WorkDayType;
+  variant?: WorkDayType;
+  colourCode?: string;
 };
 
-export const Indicator = ({ label, variant }: IndicatorProps) => {
+export const Indicator = ({ label, variant, colourCode }: IndicatorProps) => {
   return (
     <Stack gap="10px" direction="row" alignItems="center">
-      <SvgsIndicator variant={variant} />
+      <SvgsIndicator variant={variant} colourCode={colourCode} />
       {label}
     </Stack>
   );

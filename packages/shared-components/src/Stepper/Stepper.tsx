@@ -44,7 +44,7 @@ export const Stepper = ({
                 },
               }}
             >
-              <Typography variant="caption">{label}</Typography>
+              <Typography variant="body2">{label}</Typography>
             </StepLabel>
           </Step>
         ))}

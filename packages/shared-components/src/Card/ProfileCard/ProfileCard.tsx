@@ -29,7 +29,7 @@ export function ProfileCard({
       height="400px"
       onClick={onClick}
     >
-      <PadBox padding={{ padding: "5px" }}>
+      <PadBox padding={{ padding: "10px" }}>
         <Stack height="100%" justifyContent="space-between">
           {header}
           {body}

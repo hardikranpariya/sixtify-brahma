@@ -283,6 +283,14 @@ export function appTheme(theme: PaletteMode): ThemeOptions {
           },
         ],
       },
+      MuiTableCell: {
+        styleOverrides: {
+          root: {
+            borderBottom: `1px solid ${palette.app.color.butterflyBlue[700]}`,
+            padding: "10px 16px",
+          },
+        },
+      },
     },
     spacing: 10,
   };

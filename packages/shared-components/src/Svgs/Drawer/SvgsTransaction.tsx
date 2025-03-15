@@ -3,77 +3,79 @@ import type { SVGProps } from "react";
 export const SvgsTransaction = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width={20}
-    height={20}
+    width="20"
+    height="20"
+    viewBox="0 0 20 20"
     fill="none"
-    {...props}
-    style={{ color: "inherit" }}
   >
-    <g stroke={props.fill ?? "currentColor"} clipPath="url(#a)">
-      <path
-        strokeWidth={1.5}
-        d="M18 15.5C18 17.432 16.432 19 14.5 19C12.568 19 11 17.432 11 15.5C11 13.568 12.568 12 14.5 12C16.432 12 18 13.568 18 15.5Z"
-      />
-      <path
-        d="M14.6016 14.6992V16.4992"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth={1.5}
-      />
-      <path
-        d="M6.39844 1V3.7"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth={1.5}
-        strokeMiterlimit="10"
-      />
-      <path
-        d="M12.6953 1V3.7"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth={1.5}
-        strokeMiterlimit="10"
-      />
-      <path
-        d="M1.89844 7.30078H16.2984"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth={1.5}
-        strokeMiterlimit="10"
-      />
-      <path
-        d="M17.1984 6.27877V13.1616C16.5779 12.4348 15.6684 11.9707 14.6484 11.9707C12.7699 11.9707 11.2484 13.5381 11.2484 15.4734C11.2484 16.1301 11.4269 16.7518 11.7414 17.2773C11.9199 17.5925 12.1494 17.8727 12.4129 18.1004H6.14844C3.17344 18.1004 1.89844 16.349 1.89844 13.722V6.27877C1.89844 3.65174 3.17344 1.90039 6.14844 1.90039H12.9484C15.9234 1.90039 17.1984 3.65174 17.1984 6.27877Z"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth={1.5}
-        strokeMiterlimit="10"
-      />
-      <path
-        d="M9.54751 11.3504H9.55561"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth={1.5}
-        strokeMiterlimit="10"
-      />
-      <path
-        d="M6.84439 11.3504H6.85249"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth={1.5}
-        strokeMiterlimit="10"
-      />
-      <path
-        d="M6.84439 14.0496H6.85249"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth={1.5}
-        strokeMiterlimit="10"
-      />
-    </g>
-    <defs>
-      <clipPath id="a">
-        <path fill={props.fill ?? "currentColor"} d="M0 0h20v20H0z" />
-      </clipPath>
-    </defs>
+    <path
+      d="M6.66675 1.66406V4.16406"
+      stroke={props.fill ?? "currentColor"}
+      strokeWidth="1.5"
+      strokeMiterlimit="10"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M13.3333 1.66406V4.16406"
+      stroke={props.fill ?? "currentColor"}
+      strokeWidth="1.5"
+      strokeMiterlimit="10"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M2.91675 7.57812H17.0834"
+      stroke={props.fill ?? "currentColor"}
+      strokeWidth="1.5"
+      strokeMiterlimit="10"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M15.0001 19.1667C16.841 19.1667 18.3334 17.6743 18.3334 15.8333C18.3334 13.9924 16.841 12.5 15.0001 12.5C13.1591 12.5 11.6667 13.9924 11.6667 15.8333C11.6667 17.6743 13.1591 19.1667 15.0001 19.1667Z"
+      stroke={props.fill ?? "currentColor"}
+      strokeWidth="1.5"
+      strokeMiterlimit="10"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M15 14.6562V17.1479"
+      stroke={props.fill ?? "currentColor"}
+      strokeWidth="1.5"
+      strokeMiterlimit="10"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M17.5 7.08073V13.6307C16.8917 12.9391 16 12.4974 15 12.4974C13.1583 12.4974 11.6667 13.9891 11.6667 15.8307C11.6667 16.4557 11.8417 17.0474 12.15 17.5474C12.325 17.8474 12.55 18.1141 12.8083 18.3307H6.66667C3.75 18.3307 2.5 16.6641 2.5 14.1641V7.08073C2.5 4.58073 3.75 2.91406 6.66667 2.91406H13.3333C16.25 2.91406 17.5 4.58073 17.5 7.08073Z"
+      stroke={props.fill ?? "currentColor"}
+      strokeWidth="1.5"
+      strokeMiterlimit="10"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M9.99632 11.4167H10.0038"
+      stroke={props.fill ?? "currentColor"}
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M6.91185 11.4167H6.91933"
+      stroke={props.fill ?? "currentColor"}
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M6.91185 13.9167H6.91933"
+      stroke={props.fill ?? "currentColor"}
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
   </svg>
 );

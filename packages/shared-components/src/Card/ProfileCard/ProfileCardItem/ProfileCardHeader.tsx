@@ -82,7 +82,7 @@ export function ProfileCardHeader({
               WebkitBoxOrient: "vertical",
             }}
             width="330px"
-            fontWeight="600"
+            fontWeight="500"
             textAlign="center"
           >
             {employeeName ?? "-"}

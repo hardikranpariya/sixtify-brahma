@@ -1,5 +1,5 @@
 import { InputLabel, Stack, Typography, useTheme } from "@mui/material";
-import { drop, isFunction, join, last, remove, split } from "lodash";
+import { isFunction } from "lodash";
 import { useRef } from "react";
 import type {
   FieldValues,
@@ -7,42 +7,40 @@ import type {
   UseFormSetError,
 } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { v4 as uuidv4 } from "uuid";
 import { PadBox } from "../../PadBox";
 import { SvgsDrop } from "../../Svgs";
 import { isFileSizeValid, isFileTypeValid } from "../../utils";
 import { FileInput, FileUploadContainer } from "./FileUpload.styled";
 import { Skeleton } from "./Skeleton";
-import { UploadedFileName } from "./UploadedFileName";
 
 export type FileUploadProps<P extends FieldValues> = UseControllerProps<P> & {
   multiple?: boolean;
   loading?: boolean;
   isDisabled?: boolean;
   onChange: (file: File[]) => void;
-  onDelete: (file: string[]) => void;
-  uploadedFiles: string[];
   error?: boolean;
   helperText?: string;
   label?: string;
   size?: number; //Note:- Size in MB
   accept?: string;
+  fileNames: JSX.Element;
+  acceptTitle?: string;
   setError?: UseFormSetError<FieldValues>;
 };
 
 export function FileUpload<P extends FieldValues>({
   loading = false,
-  uploadedFiles,
   onChange,
-  onDelete,
   isDisabled,
   multiple = false,
   error,
   helperText,
   label,
+  fileNames,
   size = 10,
   setError,
   accept = ".png,.jpg,.jpeg,.doc,.docx,.pdf",
+  acceptTitle = "Only JPG, PNG, PDF files are accepted.",
   ...restProps
 }: FileUploadProps<P>) {
   const theme = useTheme();
@@ -52,12 +50,6 @@ export function FileUpload<P extends FieldValues>({
   const { t } = useTranslation();
 
   const inputRef = useRef<HTMLInputElement | null>(null);
-
-  const getFileName = (url: string) => {
-    const imageName = join(drop(split(last(split(url, "/")), "_")), "_");
-
-    return imageName;
-  };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
@@ -105,41 +97,9 @@ export function FileUpload<P extends FieldValues>({
 
       if (uploadFiles?.length > 0) {
         onChange(uploadFiles);
+
+        event.target.value = "";
       }
-    }
-  };
-
-  const handleFileRemove = (index: number) => {
-    if (multiple && Array.isArray(uploadedFiles)) {
-      const copyOfUploadedFiles = [...uploadedFiles];
-
-      remove(copyOfUploadedFiles, (_, i) => i === index);
-
-      onDelete(copyOfUploadedFiles.length > 0 ? copyOfUploadedFiles : []);
-    } else {
-      onDelete([]);
-    }
-
-    if (inputRef.current) {
-      inputRef.current.value = "";
-    }
-  };
-
-  const renderFileNames = () => {
-    if (!uploadedFiles) {
-      return null;
-    }
-
-    if (Array.isArray(uploadedFiles)) {
-      return uploadedFiles.map((file: string, index: number) => {
-        return (
-          <UploadedFileName
-            key={uuidv4()}
-            fileName={getFileName(file)}
-            onDelete={() => handleFileRemove(index)}
-          />
-        );
-      });
     }
   };
 
@@ -171,9 +131,7 @@ export function FileUpload<P extends FieldValues>({
 
             <Typography>Drag & drop files or Browse</Typography>
 
-            <Typography variant="caption">
-              Only JPG, PNG, PDF files are accepted.
-            </Typography>
+            <Typography variant="caption">{acceptTitle}</Typography>
           </Stack>
         </PadBox>
       </FileUploadContainer>
@@ -190,8 +148,7 @@ export function FileUpload<P extends FieldValues>({
           {helperText}
         </Typography>
       )}
-
-      {renderFileNames()}
+      {fileNames}
     </Stack>
   );
 }

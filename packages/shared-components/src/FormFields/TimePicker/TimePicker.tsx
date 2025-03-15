@@ -27,6 +27,7 @@ export type TimePickerProps<P extends FieldValues> = UseControllerProps<P> &
     isReturnDateWithTime: boolean;
     helperIcon?: ReactElement;
     toolTipText?: string;
+    timeStepsMinutes?: number;
   }>;
 
 export function TimePicker<P extends FieldValues>({
@@ -44,6 +45,7 @@ export function TimePicker<P extends FieldValues>({
   format = "HH:mm",
   isReturnLocalTime = false,
   isReturnDateWithTime = false,
+  timeStepsMinutes = 1,
   helperIcon,
   toolTipText,
   ...restProps
@@ -96,6 +98,7 @@ export function TimePicker<P extends FieldValues>({
         format={format}
         onOpen={() => setOpen(true)}
         onClose={() => setOpen(false)}
+        timeSteps={{ minutes: timeStepsMinutes }}
         slotProps={{
           textField: {
             disabled,
@@ -111,6 +114,9 @@ export function TimePicker<P extends FieldValues>({
           },
           popper: {
             sx: {
+              "& .MuiMultiSectionDigitalClockSection-root::after": {
+                display: "unset",
+              },
               "& .MuiList-padding": {
                 padding: "10px",
               },

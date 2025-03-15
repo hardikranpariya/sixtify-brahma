@@ -11,8 +11,9 @@ type AgGridActionColumn = {
 
 type ActionColumnProps = {
   items: AgGridActionColumn[];
+  disabled?: boolean;
 };
-export const ActionCell = ({ items }: ActionColumnProps) => {
+export const ActionCell = ({ items, disabled }: ActionColumnProps) => {
   const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null);
 
   const HandleClose = () => {
@@ -29,6 +30,7 @@ export const ActionCell = ({ items }: ActionColumnProps) => {
         component="div"
         sx={{ cursor: "pointer", alignItems: "center", width: "100%" }}
         onClick={HandleClick}
+        disabled={disabled}
       >
         <MoreVertIcon />
       </IconButton>

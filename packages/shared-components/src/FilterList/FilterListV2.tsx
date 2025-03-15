@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import { ExpandMore } from "@mui/icons-material";
 import {
   Accordion,
   AccordionDetails,
@@ -11,23 +11,25 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import type { FilterListType } from "./FilterTypeWrapper";
+import { ClearIcon } from "@mui/x-date-pickers/icons";
+import { isEmpty } from "lodash";
+import { DateTime } from "luxon";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import type { FieldValues } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
+import { Button } from "../Button";
+import { FilterPill } from "../Chips/FilterPill";
+import { dateFormats } from "../FormFields";
+import { Switch } from "../FormFields/Switch";
+import { PadBox } from "../PadBox";
+import { SvgFilterList } from "../Svgs/SvgFilterList";
+import { Tooltip } from "../Tooltip";
 import {
   FilterPopupWrapper,
   GetFilterPopupComponent,
 } from "./FilterPopupWrapper";
-import type { FieldValues } from "react-hook-form";
-import { useForm, useWatch } from "react-hook-form";
-import { SvgFilterList } from "../Svgs/SvgFilterList";
-import { ExpandMore } from "@mui/icons-material";
-import { Switch } from "../FormFields/Switch";
-import { PadBox } from "../PadBox";
-import { Button } from "../Button";
-import { ClearIcon } from "@mui/x-date-pickers/icons";
-import { Tooltip } from "../Tooltip";
-import { FilterPill } from "../Chips/FilterPill";
+import type { FilterListType } from "./FilterTypeWrapper";
 import { getFormValue } from "./getFormData";
-import { isEmpty } from "lodash";
 
 export type FilterListV2Props = {
   filterListItems: FilterListType[];
@@ -37,6 +39,7 @@ export type FilterListV2Props = {
   onChange: (data: FieldValues, isPopup: boolean) => void;
   onClear: () => void;
   resetFormBasedOnFields?: string;
+  dateKeys?: string[];
 };
 export const FilterListV2 = ({
   filterListItems,
@@ -45,6 +48,7 @@ export const FilterListV2 = ({
   onApply,
   onClear,
   onChange,
+  dateKeys,
 }: FilterListV2Props) => {
   const theme = useTheme();
 
@@ -170,7 +174,14 @@ export const FilterListV2 = ({
 
       const item = getFilterItem(key);
 
-      const keyValue = item && getFormValue(value, item);
+      const keyValue =
+        item &&
+        getFormValue(
+          dateKeys?.includes(item?.key)
+            ? DateTime.fromISO(value).toFormat(dateFormats.dateWithEuropean)
+            : value,
+          item
+        );
 
       if (!keyValue) {
         return;

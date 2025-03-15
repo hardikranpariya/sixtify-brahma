@@ -13,18 +13,23 @@ export type WorkDayType =
   | "paid_leave"
   | "absent"
   | "late_in_early_out"
-  | "unpaid_leave";
+  | "unpaid_leave"
+  | "loss_of_pay"
+  | "penalty";
 
 export type WorkDayTypeShort =
   | "P"
   | "H"
   | "WO"
   | "HO"
-  | "HWO"
+  | "FHWO"
+  | "SHWO"
   | "PL"
   | "A"
   | "LIEO"
-  | "UPL";
+  | "UPL"
+  | "PEN"
+  | "LOP";
 
 export const serverityOptions: Record<WorkDayType, WorkDayTypeShort> = {
   present: "P",
@@ -34,12 +39,14 @@ export const serverityOptions: Record<WorkDayType, WorkDayTypeShort> = {
   first_half_off: "HO",
   second_half_off: "HO",
   full_day_weekly_off: "WO",
-  first_half_weekly_off: "HWO",
-  second_half_weekly_off: "HWO",
+  first_half_weekly_off: "FHWO",
+  second_half_weekly_off: "SHWO",
   paid_leave: "PL",
   absent: "A",
   unpaid_leave: "UPL",
   late_in_early_out: "LIEO",
+  loss_of_pay: "LOP",
+  penalty: "PEN",
 };
 
 export const getColorByVariant = (variant: WorkDayType, type = "dark") => {
@@ -48,7 +55,8 @@ export const getColorByVariant = (variant: WorkDayType, type = "dark") => {
   const { darkMint, sapphireBlue, darkOrange, orchid, lipstickRed, deepAqua } =
     theme.palette.app.color;
 
-  const index = type === "dark" ? 900 : 600;
+  // eslint-disable-next-line sonarjs/no-nested-conditional
+  const index = type === "dark" ? (variant === "penalty" ? 800 : 900) : 600;
 
   switch (variant) {
     case "present":
@@ -89,6 +97,12 @@ export const getColorByVariant = (variant: WorkDayType, type = "dark") => {
 
     case "late_in_early_out":
       return lipstickRed[800];
+
+    case "loss_of_pay":
+      return lipstickRed[800];
+
+    case "penalty":
+      return lipstickRed[index];
 
     default:
       return lipstickRed[index];
@@ -135,6 +149,12 @@ export const getStatusLabel = (status: WorkDayType) => {
 
     case "late_in_early_out":
       return "Late In/Early Out";
+
+    case "loss_of_pay":
+      return "Loss of Pay";
+
+    case "penalty":
+      return "Penalty";
 
     default:
       return "Absent";
