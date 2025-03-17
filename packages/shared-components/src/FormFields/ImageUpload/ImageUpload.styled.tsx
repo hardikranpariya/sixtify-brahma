@@ -1,6 +1,9 @@
-import { Box, styled } from "@mui/material";
+import { Box, BoxProps, styled } from "@mui/material";
+import { ComponentType } from "react";
 
-export const DarkBackgroundContainer = styled(Box)(({ theme }) => {
+export const DarkBackgroundContainer: ComponentType<BoxProps> = styled(Box)(({
+  theme,
+}) => {
   return {
     position: "absolute",
     top: 0,

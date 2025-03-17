@@ -1,7 +1,17 @@
-import { IconButton, Menu, menuClasses, type CSSObject } from "@mui/material";
+import {
+  IconButton,
+  IconButtonProps,
+  Menu,
+  menuClasses,
+  MenuProps,
+  type CSSObject,
+} from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { ComponentType } from "react";
 
-export const MenuStyled = styled(Menu)(({ theme }) => {
+export const MenuStyled: ComponentType<MenuProps> = styled(Menu)(({
+  theme,
+}) => {
   const style: CSSObject = {
     [`& .${menuClasses.paper}`]: {
       boxShadow: theme.palette.app.paperBoxShadow,
@@ -20,9 +30,12 @@ export const MenuStyled = styled(Menu)(({ theme }) => {
   return style;
 });
 
-export const IconButtonStyled = styled(IconButton, {
-  shouldForwardProp: (prop) => prop !== "isOpened",
-})<{ isOpened?: boolean }>(() => {
+export const IconButtonStyled: ComponentType<IconButtonProps> = styled(
+  IconButton,
+  {
+    shouldForwardProp: (prop) => prop !== "isOpened",
+  }
+)<{ isOpened?: boolean }>(() => {
   const style: CSSObject = {
     paddingInline: "0.3rem",
     paddingBlock: "0.2rem",

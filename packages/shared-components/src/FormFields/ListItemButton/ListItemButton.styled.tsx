@@ -1,10 +1,13 @@
 import {
-  styled,
   ListItemButton as MuiListItemButton,
+  styled,
   type ListItemButtonProps as MuiListItemButtonProps,
 } from "@mui/material";
+import { ComponentType } from "react";
 
-export const StyledListItemButton = styled(MuiListItemButton, {
+export const StyledListItemButton: ComponentType<
+  MuiListItemButtonProps & { selected?: boolean }
+> = styled(MuiListItemButton, {
   shouldForwardProp: (prop) => prop !== "selected",
 })<MuiListItemButtonProps & { selected?: boolean }>(({ theme, selected }) => ({
   background: theme.palette.app.color.iron[600],

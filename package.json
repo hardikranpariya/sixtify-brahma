@@ -35,7 +35,8 @@
   },
   "peerDependencies": {
     "react": "^17.0.0 || ^18.0.0",
-    "react-dom": "^17.0.0 || ^18.0.0"
+    "react-dom": "^17.0.0 || ^18.0.0",
+    "react-hook-form": "^7.51.5"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
@@ -65,7 +66,6 @@
     "next": "^14.2.5",
     "next-auth": "^4.24.7",
     "react-date-range": "^2.0.1",
-    "react-hook-form": "^7.51.5",
     "react-i18next": "^14.1.2",
     "react-multi-carousel": "^2.8.5",
     "react-toastify": "^10.0.5",

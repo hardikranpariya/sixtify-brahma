@@ -1,7 +1,10 @@
-import { Box, styled, type CSSObject } from "@mui/material";
+import { Box, BoxProps, styled, type CSSObject } from "@mui/material";
+import { ComponentType } from "react";
 import { ToastContainer, type ToastContainerProps } from "react-toastify";
 
-export const ToasterStyled = styled(ToastContainer)<ToastContainerProps>(({
+export const ToasterStyled: ComponentType<ToastContainerProps> = styled(
+  ToastContainer as any
+)<ToastContainerProps>(({
   theme: {
     palette: {
       app: { color },
@@ -67,7 +70,7 @@ export const ToasterStyled = styled(ToastContainer)<ToastContainerProps>(({
   };
 });
 
-export const HoverBox = styled(Box)(({ theme }) => ({
+export const HoverBox: ComponentType<BoxProps> = styled(Box)(({ theme }) => ({
   color: theme.palette.app.color.slate[900],
 
   "&:hover": {

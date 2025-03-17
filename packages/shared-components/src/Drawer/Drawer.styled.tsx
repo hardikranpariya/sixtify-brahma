@@ -1,7 +1,13 @@
-import type { CSSObject, Theme } from "@mui/material";
-import { Box, Drawer as MuiDrawer, styled } from "@mui/material";
+import type { BoxProps, CSSObject, Theme } from "@mui/material";
+import {
+  Box,
+  Drawer as MuiDrawer,
+  DrawerProps as MuiDrawerProps,
+  styled,
+} from "@mui/material";
+import { ComponentType } from "react";
 
-export const Bullet = styled(Box)(({ theme }) => ({
+export const Bullet: ComponentType<BoxProps> = styled(Box)(({ theme }) => ({
   width: 7,
   height: 7,
   borderRadius: "50%",
@@ -32,10 +38,15 @@ const closedMixin = (theme: Theme): CSSObject => ({
   },
   backgroundColor: theme.palette.app.color.mirage[900],
 });
-
-export const StyledDrawer = styled(MuiDrawer, {
-  shouldForwardProp: (prop) => prop !== "open",
-})(({ theme, open }) => ({
+interface StyledDrawerProps extends MuiDrawerProps {
+  open?: boolean;
+}
+export const StyledDrawer: ComponentType<StyledDrawerProps> = styled(
+  MuiDrawer,
+  {
+    shouldForwardProp: (prop) => prop !== "open",
+  }
+)(({ theme, open }) => ({
   width: drawerWidth,
   flexShrink: 0,
   whiteSpace: "nowrap",

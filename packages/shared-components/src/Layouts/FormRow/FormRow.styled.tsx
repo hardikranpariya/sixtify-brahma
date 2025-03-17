@@ -1,6 +1,6 @@
-import { Stack } from "@mui/material";
+import { Stack, StackProps } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { Children } from "react";
+import { Children, ComponentType } from "react";
 
 function calculateWidth(
   childrenCount: number,
@@ -18,22 +18,28 @@ function calculateWidth(
   return "100%";
 }
 
-export const RowContainerStyled = styled(Stack, {
-  shouldForwardProp(prop) {
-    return prop !== "fullWidth";
-  },
-})<{ fullWidth: boolean; maxColumn: number }>(({
-  children,
-  fullWidth,
-  maxColumn,
-}) => {
-  const childrenCount = Children.toArray(children).length;
+type RowContainerStyledProps = StackProps & {
+  fullWidth: boolean;
+  maxColumn: number;
+};
 
-  const flexBasis = calculateWidth(childrenCount, fullWidth, maxColumn);
-
-  return {
-    "& > *": {
-      flexBasis,
+export const RowContainerStyled: ComponentType<RowContainerStyledProps> =
+  styled(Stack, {
+    shouldForwardProp(prop) {
+      return prop !== "fullWidth";
     },
-  };
-});
+  })<{ fullWidth: boolean; maxColumn: number }>(({
+    children,
+    fullWidth,
+    maxColumn,
+  }) => {
+    const childrenCount = Children.toArray(children).length;
+
+    const flexBasis = calculateWidth(childrenCount, fullWidth, maxColumn);
+
+    return {
+      "& > *": {
+        flexBasis,
+      },
+    };
+  });

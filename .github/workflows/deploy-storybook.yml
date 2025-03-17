@@ -1,14 +1,53 @@
-name: Deploy Storybook to GitHub Pages
+name: Publish to npm and Deploy Storybook
 
-# Trigger the workflow on every push to the main branch
 on:
   push:
     branches:
-      - main  # Adjust this to match your branch name
+      - main
 
 jobs:
-  deploy:
+  publish-npm:
     runs-on: ubuntu-latest
+
+    steps:
+      # Checkout repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          registry-url: 'https://registry.npmjs.org/'
+
+      - name: Install PNPM Globally
+        run: npm install -g pnpm
+
+      # Install dependencies
+      - name: Install dependencies
+        run: pnpm install
+
+      # Build the package
+      - name: Build package
+        run: pnpm run build 
+
+      # Set npm authentication token
+      - name: Authenticate with npm
+        run: npm config set //registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}
+
+      # Optional: Bump version
+      - name: Bump Version
+        run: |
+          npm version patch -m "ci: release version %s"
+
+      # Publish to npm
+      - name: Publish to npm
+        run: npm publish --access public
+
+  deploy-storybook:
+    runs-on: ubuntu-latest
+    needs: publish-npm  # Wait until npm publish completes
 
     steps:
       # Step 1: Check out the repository
@@ -38,3 +77,8 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: apps/docs/storybook-static  # Adjust to your static output directory
+
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: apps/docs/storybook-static

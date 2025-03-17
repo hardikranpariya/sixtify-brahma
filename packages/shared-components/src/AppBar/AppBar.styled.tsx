@@ -1,10 +1,18 @@
 import { styled } from "@mui/material";
 import type { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import MuiAppBar from "@mui/material/AppBar";
+import { ComponentType } from "react";
 
-export const StyledAppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== "open",
-})<MuiAppBarProps & { open?: boolean }>(({ theme, open }) => ({
+interface StyledAppBarProps extends MuiAppBarProps {
+  open?: boolean;
+}
+
+export const StyledAppBar: ComponentType<StyledAppBarProps> = styled(
+  MuiAppBar,
+  {
+    shouldForwardProp: (prop) => prop !== "open",
+  }
+)<StyledAppBarProps>(({ theme, open }) => ({
   background: theme.palette.app.color.iron[600],
   boxShadow: "unset",
   zIndex: theme.zIndex.drawer + 1,

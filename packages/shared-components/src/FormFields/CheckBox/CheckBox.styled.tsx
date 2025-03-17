@@ -1,11 +1,18 @@
 import { Check } from "@mui/icons-material";
-import type { CSSObject, CheckboxProps } from "@mui/material";
+import type { BoxProps, CSSObject, CheckboxProps } from "@mui/material";
 import { Box, styled } from "@mui/material";
+import { ComponentType } from "react";
+interface BoxStyledProps extends BoxProps {
+  size: CheckboxProps["size"];
+}
 
-export const BoxStyled = styled(Box)<{ size: CheckboxProps["size"] }>(({
-  theme,
-  size,
-}) => {
+interface CheckStyledProps extends CheckboxProps {
+  size: CheckboxProps["size"];
+}
+
+export const BoxStyled: ComponentType<BoxStyledProps> = styled(Box)<{
+  size: CheckboxProps["size"];
+}>(({ theme, size }) => {
   const { color } = theme.palette.app;
 
   const checkBoxSize =
@@ -34,10 +41,11 @@ export const BoxStyled = styled(Box)<{ size: CheckboxProps["size"] }>(({
   return style;
 });
 
-export const CheckStyled = styled(Check)<{ size: CheckboxProps["size"] }>(({
-  theme,
-  size,
-}) => {
+export const CheckStyled: ComponentType<CheckStyledProps> = styled(
+  Check as any
+)<{
+  size: CheckboxProps["size"];
+}>(({ theme, size }) => {
   const { color } = theme.palette.app;
 
   const checkBoxSize =
