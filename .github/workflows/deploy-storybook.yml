@@ -39,7 +39,7 @@ jobs:
       # Optional: Bump version
       - name: Bump Version
         run: |
-          npm version patch -m "ci: release version %s"
+         npm version patch --no-git-tag-version
 
       # Publish to npm
       - name: Publish to npm
